@@ -1,0 +1,95 @@
+/* Home.module.css */
+
+.container {
+    display: flex;
+    position: relative;
+    margin: 0;
+    width: 100%; /* 确保宽度为100% */
+    flex-direction: column; /* 使内容垂直排列 */
+    justify-content: center; /* 垂直居中 */
+    align-items: center; /* 水平居中 */
+    height: 100vh; /* 使容器占满整个屏幕高度 */
+}
+
+.h1_begain {
+    position: fixed;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 3rem;
+    font-weight: bold;
+  }
+  
+.button_begain {
+    position: fixed;
+    top: 65%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 1rem 2rem;
+    border: 1px solid #2D3748;
+    background-color: #2D3748;
+    color: #FFFFFF;
+    border-radius: 0.5rem;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+.button_begain:hover {
+    background-color: #FFFFFF;
+    color: #2D3748;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+  
+.card {
+    background-color: #fafafa;
+    padding: 15px;
+    margin: 15px 0;
+    border: 1px solid #e1e1e1;
+    border-radius: 5px;
+}
+
+.playerCard {
+    position: absolute;
+    top: 30px;
+    right: 30px;
+    width: 180px;
+    background-color: #fff;
+    border: 1px solid #e1e1e1;
+    box-shadow: 0 3px 15px rgba(0,0,0,0.1);
+    border-radius: 10px;
+    padding: 15px;
+    z-index: 10;
+}
+
+.loadingIndicator .spinner {
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    border: 5px solid rgba(0, 0, 0, 0.2);
+    border-radius: 50%;
+    border-top: 5px solid #333;
+    animation: spin 1s linear infinite;
+    margin-right: 10px;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Responsive styles */
+@media (max-width: 600px) {
+    .contentWrapper {
+        padding-right: 15px;
+    }
+    .playerCard {
+        position: relative;
+        top: auto;
+        right: auto;
+        width: 100%;
+        margin-top: 20px;
+    }
+}
+
+/* Additional global styles could go in a separate CSS file, like App.module.css */
