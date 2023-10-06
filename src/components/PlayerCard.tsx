@@ -1,7 +1,7 @@
 // 文件路径: components/PlayerCard.tsx
 
 import React from 'react';
-import styles from '../styles/Home.module.css';
+import styles from '../styles/playercard.module.css';
 
 interface PlayerCardProps {
   attributes: {
@@ -15,14 +15,13 @@ const PlayerCard: React.FC<PlayerCardProps> = ({ attributes }) => {
     gender: "性别",
     appearance: "外貌",
     intelligence: "智力",
-    wealth: "财富",
-    health: "身体健康",
-    mental_state: "心理健康",
-    // 如果还有其他属性，也可以在这里添加
+    wealth: "家境",
+    health: "身体",
+    mental_state: "心境",
   };
 
   const filteredAttributes = Object.entries(attributes)
-    .filter(([key]) => key !== 'experiences')
+    .filter(([key]) => key !== 'experiences' && key !== 'gender' && key !== 'age')
     .reduce((acc, [key, value]) => {
       acc[attributeTranslations[key] || key] = value;
       return acc;
@@ -30,7 +29,7 @@ const PlayerCard: React.FC<PlayerCardProps> = ({ attributes }) => {
 
   return (
     <div className={styles.playerCard}>
-      <h2>玩家属性</h2>
+      {/* <h2>玩家属性</h2> */}
       <ul>
         {Object.entries(filteredAttributes).map(([key, value]) => (
           <li key={key}>{key}: {value}</li>

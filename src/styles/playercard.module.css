@@ -1,0 +1,33 @@
+.playerCard {
+    position: relative;
+    background-color: #fff;
+    border: 1px solid #e1e1e1;
+    box-shadow: 0 3px 15px rgba(0,0,0,0.1);
+    border-radius: 10px;
+    padding: 5px;
+    z-index: 10; 
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    align-items: center; /* Align items vertically */
+    justify-content: center; /* Center items horizontally */
+    width: auto; /* Let the width be content-driven */
+  }
+  
+
+.playerCard h2 {
+    margin-right: 10px;
+}
+
+.playerCard ul {
+    display: flex;
+    /* 使用 flex 布局 */
+    flex-direction: row;
+    /* 子元素横向排列 */
+    gap: 10px;
+    /* 子元素之间的间隔 */
+    list-style-type: none;
+    /* 移除项目符号 */
+    padding: 0;
+    /* 移除默认的内边距 */
+}
