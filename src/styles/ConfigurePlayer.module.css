@@ -1,0 +1,37 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+}
+
+.content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.babyImage {
+    width: 300px;
+    height: 300px;
+    object-fit: cover;
+    border-radius: 50%;
+    margin-right: 50px;
+    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
+}
+
+.attributes {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.attributeContainer {
+    display: flex;
+    align-items: center;
+    margin: 10px 0;
+}
+
+.attributeContainer > span, .attributeContainer > button {
+    margin: 0 10px;
+}
