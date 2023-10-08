@@ -7,6 +7,7 @@
     padding: 20px;
     /* background-color: #f7fafc;  轻灰色背景 */
     min-height: 100vh;
+    scroll-behavior: smooth;
 }
 .attributes {
     width: 100%;
@@ -23,8 +24,23 @@
     align-items: center;
     padding: 10px;
     border-bottom: 1px solid #e2e8f0;  /* 灰色边框 */
+    opacity: 0;
+    animation: fadeIn 1s forwards;
 }
 
 .eventContainer:last-child {
     border-bottom: none;  /* 移除最后一个事件的下边框 */
+}
+
+@keyframes fadeIn {
+    to {
+        opacity: 1;
+    }
+}
+
+.loadingMessage {
+    text-align: center;
+    font-size: 16px;
+    color: gray;
+    padding: 20px;
 }
