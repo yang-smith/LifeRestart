@@ -122,11 +122,15 @@ export async function death(playerAttributes: PlayerAttributes, eventsList: stri
   }
 }
 
+interface Updates {
+  [key: string]: any;
+}
+
 const attributeMapping: { [key: string]: keyof PlayerAttributes } = {
   "外貌": "appearance",
   "智力": "intelligence",
   "家境": "wealth",
-  "身体": "health",
+  "体质": "health",
   "心境": "mental_state"
 };
 
@@ -139,21 +143,21 @@ export function updatePlayerAttributesFromString(
 
   if (match && match[1]) {
     try {
-      const rawUpdates: any = JSON.parse(`{${match[1]}}`);
-      const updates: Partial<PlayerAttributes> = {};
-
+      const rawUpdates = JSON.parse(`{${match[1]}}`);
+      const updates: { [key: string]: any } = {};
+      
       for (let key in rawUpdates) {
-        const englishKey = attributeMapping[key];
-        if (englishKey) {
-          updates[englishKey as keyof PlayerAttributes] = rawUpdates[key];
-
-        }
+          const englishKey = attributeMapping[key];
+          if (englishKey && typeof rawUpdates[key] === typeof currentAttributes[englishKey]) {
+              updates[englishKey] = rawUpdates[key];
+          }
       }
-
-      return { ...currentAttributes, ...updates };
+      
+      return { ...currentAttributes, ...updates as PlayerAttributes };      
     } catch (e) {
       console.error("Error parsing player attributes update:", e);
     }
   }
   return currentAttributes;
 }
+

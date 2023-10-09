@@ -114,7 +114,7 @@ const PlayerLifeEvents: React.FC = () => {
         <div className={styles.container}>
             <h2>事件</h2>
 
-            <PlayerCard attributes={playerAttributes} />
+            <PlayerCard attributes={playerAttributes as any} />
             <DecisionModal
                 isOpen={isDecisionModalOpen}
                 hasMadeChoice={hasMadeChoice}

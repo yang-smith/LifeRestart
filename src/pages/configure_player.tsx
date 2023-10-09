@@ -34,7 +34,7 @@ const ConfigurePlayer: React.FC = () => {
     appearance: "外貌",
     intelligence: "智力",
     wealth: "家境",
-    health: "身体",
+    health: "体质",
     mental_state: "心境",
   };
   const DEFAULT_PLAYER_ATTRIBUTES = {
