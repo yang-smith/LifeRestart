@@ -105,11 +105,13 @@ export async function update(playerAttributes: PlayerAttributes): Promise<any> {
   }
 }
 
-export async function death(playerAttributes: PlayerAttributes): Promise<any> {
+export async function death(playerAttributes: PlayerAttributes, eventsList: string[]): Promise<any> {
   try {
+    const playerContent = generatePlayerContent(playerAttributes);
     const messages = [
       { "role": "system", "content": SYSTEM_MESSAGE },
-      { "role": "user", "content": `${playerAttributes.experiences.join('####')} ${DEATH}` }
+      // { "role": "assistant", "content": `${eventsList} ` },
+      { "role": "user", "content": `${playerContent} ${DEATH}` }
     ];
     console.log(messages);
     const response = await fetchFromOpenAI(messages, 'gpt-3.5-turbo-16k', 10000);
@@ -117,4 +119,39 @@ export async function death(playerAttributes: PlayerAttributes): Promise<any> {
   } catch (error) {
     console.error("Error fetching data from OpenAI:", error);
   }
+}
+
+const attributeMapping: { [key: string]: keyof PlayerAttributes } = {
+  "外貌": "appearance",
+  "智力": "intelligence",
+  "家境": "wealth",
+  "身体": "health",
+  "心境": "mental_state"
+};
+
+export function updatePlayerAttributesFromString(
+  str: string,
+  currentAttributes: PlayerAttributes
+): PlayerAttributes {
+  const regex = /\{([^}]+)\}/;
+  const match = str.match(regex);
+
+  if (match && match[1]) {
+    try {
+      const rawUpdates: any = JSON.parse(`{${match[1]}}`);
+      const updates: Partial<PlayerAttributes> = {};
+
+      for (let key in rawUpdates) {
+        const englishKey = attributeMapping[key];
+        if (englishKey) {
+          updates[englishKey] = rawUpdates[key];
+        }
+      }
+
+      return { ...currentAttributes, ...updates };
+    } catch (e) {
+      console.error("Error parsing player attributes update:", e);
+    }
+  }
+  return currentAttributes;
 }
