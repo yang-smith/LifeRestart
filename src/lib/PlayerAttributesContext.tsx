@@ -22,7 +22,11 @@ const PlayerAttributesContext = React.createContext<PlayerAttributesContextProps
 
 export default PlayerAttributesContext;
 
-export const PlayerAttributesProvider: React.FC = ({ children }) => {
+interface PlayerAttributesProviderProps {
+    children: React.ReactNode;
+}
+
+export const PlayerAttributesProvider: React.FC<PlayerAttributesProviderProps> = ({ children }) => {
     const [playerAttributes, setPlayerAttributes] = React.useState<PlayerAttributes>({
         gender: 'male',
         age: 0,
