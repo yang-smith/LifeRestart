@@ -57,8 +57,7 @@
     background-color: #e0e0e0;
 }
 
-.attributes ReactMarkdown, 
-.attributes .yourReactMarkdownClassName {
-    display: block;
-    columns: auto;
+.markdown {
+    margin-bottom: 20px;
+    font-size: 18px;
 }

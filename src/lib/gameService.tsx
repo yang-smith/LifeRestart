@@ -20,7 +20,7 @@ export function generatePlayerContent(playerAttributes: PlayerAttributes): strin
     "- **外貌**: " + playerAttributes.appearance + " \n" +
     "- **智力**: " + playerAttributes.intelligence + " \n" +
     "- **家境**: " + playerAttributes.wealth + " \n" +
-    "- **身体**: " + playerAttributes.health + " \n" +
+    "- **体质**: " + playerAttributes.health + " \n" +
     "- **心境**: " + playerAttributes.mental_state + " \n";
 
   return playerContent;

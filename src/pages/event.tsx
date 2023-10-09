@@ -29,11 +29,13 @@ const PlayerLifeEvents: React.FC = () => {
 
     async function fetchAgeEvent() {
         console.log("fetchAgeEvent is called");
-        if (playerAttributesRef.current.age > playerAttributesRef.current.health * 10) {
+        setIsAIWorking(true);
+        if (playerAttributesRef.current.age >= playerAttributesRef.current.health * 10) {
             const result = await death(playerAttributesRef.current, ageEvent);
             console.log(result);
             setAgeEvent(prevEvents => [...prevEvents, result]);
             setIsDeath(true);
+            setIsAIWorking(false);
             return;
         }
         const result = await generateAgeEvent(playerAttributesRef.current);
@@ -48,15 +50,22 @@ const PlayerLifeEvents: React.FC = () => {
             setIsAIWorking(false);
 
             await new Promise(resolve => setTimeout(resolve, 3000));
-            const event = await generateEvent(playerAttributesRef.current);
-            console.log(event);
-            const parts = event.split("%");
-            if (parts.length > 1) {
-                setEventDescription(parts[0]);
-                const choicesList = parts[1].split(/\d\. /).filter(choice => choice);
-                const choiceList0 = choicesList.slice(1);
-                setChoices(choiceList0);
-                setIsDecisionModalOpen(true);
+            const eventData = await generateEvent(playerAttributesRef.current);
+            console.log(eventData);
+            try {
+                const parsedEvent = JSON.parse(eventData);
+            
+                if (parsedEvent.eventDescription && parsedEvent.choices && parsedEvent.choices.length > 0) {
+                    setEventDescription(parsedEvent.eventDescription);
+                    
+                    // 提取choices中的描述
+                    const choiceDescriptions = parsedEvent.choices.map(choice => choice.optionDescription);
+                    setChoices(choiceDescriptions);
+                    
+                    setIsDecisionModalOpen(true);
+                }
+            } catch (error) {
+                console.error("Error parsing the event data:", error);
             }
         }
 
@@ -122,21 +131,21 @@ const PlayerLifeEvents: React.FC = () => {
                     setIsEvnetend(false);
                 }}
             />
+
+            <div className={styles.attributes}>
+                {displayedEvents.map((event, index) => (
+                    <div
+                        key={index}
+                        className={styles.eventContainer}
+                        ref={index === displayedEvents.length - 1 ? lastEventRef : null}
+                    >
+                        <ReactMarkdown className={styles.markdown}>{event}</ReactMarkdown>
+                    </div>
+                ))}
+            </div>
             {isAIWorking ? (
                 <div className={styles.loadingMessage}>AI正在工作...</div>
-            ) : (
-                <div className={styles.attributes}>
-                    {displayedEvents.map((event, index) => (
-                        <div
-                            key={index}
-                            className={styles.eventContainer}
-                            ref={index === displayedEvents.length - 1 ? lastEventRef : null}
-                        >
-                            <ReactMarkdown>{event}</ReactMarkdown>
-                        </div>
-                    ))}
-                </div>
-            )}
+            ) : null}
             {isDeath ? (
                 <button
                     className={styles.choiceButton}
