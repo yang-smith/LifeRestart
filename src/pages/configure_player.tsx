@@ -17,7 +17,9 @@ const ConfigurePlayer: React.FC = () => {
   const adjustAttribute = (attributeName: string, adjustment: number) => {
 
     const expectedTotal = TOTAL + adjustment;
-    if (expectedTotal >= 0 && expectedTotal <= TOTAL_ATTRIBUTE_LIMIT) {
+    const expectedAttributeValue = playerAttributes[attributeName]; + adjustment;
+    if (expectedTotal >= 0 && expectedTotal <= TOTAL_ATTRIBUTE_LIMIT 
+      && expectedAttributeValue >= 0 && expectedAttributeValue <= 10) {
       setPlayerAttributes(prevState => ({
         ...prevState,
         [attributeName]: prevState[attributeName] + adjustment
@@ -74,7 +76,7 @@ const ConfigurePlayer: React.FC = () => {
                   <span>{playerAttributes[key]}</span>
                   <button
                     onClick={() => adjustAttribute(key, 1)}
-                    disabled={TOTAL + 1 > TOTAL_ATTRIBUTE_LIMIT} // 禁用 "+" 如果增加会超过上限
+                    disabled={playerAttributes[key] >= 10 || TOTAL + 1 > TOTAL_ATTRIBUTE_LIMIT}
                   >
                     +
                   </button>
