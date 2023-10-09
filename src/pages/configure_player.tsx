@@ -17,7 +17,7 @@ const ConfigurePlayer: React.FC = () => {
   const adjustAttribute = (attributeName: string, adjustment: number) => {
 
     const expectedTotal = TOTAL + adjustment;
-    const expectedAttributeValue = playerAttributes[attributeName]; + adjustment;
+    const expectedAttributeValue = playerAttributes[attributeName] + adjustment;
     if (expectedTotal >= 0 && expectedTotal <= TOTAL_ATTRIBUTE_LIMIT 
       && expectedAttributeValue >= 0 && expectedAttributeValue <= 10) {
       setPlayerAttributes(prevState => ({

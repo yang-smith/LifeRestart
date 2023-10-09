@@ -14,7 +14,6 @@ export async function fetchFromOpenAI(
   maxTokens: number = 1024
 ): Promise<string> {
   const openAiKey = await getKey();
-  console.log(openAiKey);
   
   const response = await fetch(openAiEndpoint, {
     method: 'POST',

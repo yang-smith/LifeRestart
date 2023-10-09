@@ -8,29 +8,28 @@ interface PlayerCardProps {
     [key: string]: string | number | string[];
   };
 }
+const attributeTranslations = {
+  age: "年龄",
+  gender: "性别",
+  appearance: "外貌",
+  intelligence: "智力",
+  wealth: "家境",
+  health: "身体",
+  mental_state: "心境",
+};
 
 const PlayerCard: React.FC<PlayerCardProps> = ({ attributes }) => {
-  const attributeTranslations = {
-    age: "年龄",
-    gender: "性别",
-    appearance: "外貌",
-    intelligence: "智力",
-    wealth: "家境",
-    health: "身体",
-    mental_state: "心境",
-  };
+
 
   const filteredAttributes = Object.entries(attributes)
     .filter(([key]) => key !== 'experiences' && key !== 'gender' && key !== 'age')
     .reduce((acc: { [key: string]: string | number | string[] }, [key, value]) => {
-      acc[attributeTranslations[key] || key] = value;
+      acc[attributeTranslations[key as keyof typeof attributeTranslations] || key] = value;
       return acc;
     }, {});
 
-
   return (
     <div className={styles.playerCard}>
-      {/* <h2>玩家属性</h2> */}
       <ul>
         {Object.entries(filteredAttributes).map(([key, value]) => (
           <li key={key}>{key}: {value}</li>

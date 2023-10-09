@@ -2,6 +2,7 @@
 
 // Assuming the import paths are correct based on your project structure:
 import { fetchFromOpenAI } from '@/lib/openai';
+import { PlayerAttributes } from '@/lib/PlayerAttributesContext'; 
 import {
   SYSTEM_MESSAGE,
   AGE_EVENT,
@@ -144,7 +145,8 @@ export function updatePlayerAttributesFromString(
       for (let key in rawUpdates) {
         const englishKey = attributeMapping[key];
         if (englishKey) {
-          updates[englishKey] = rawUpdates[key];
+          updates[englishKey as keyof PlayerAttributes] = rawUpdates[key];
+
         }
       }
 
