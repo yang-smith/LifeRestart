@@ -22,10 +22,11 @@ const PlayerCard: React.FC<PlayerCardProps> = ({ attributes }) => {
 
   const filteredAttributes = Object.entries(attributes)
     .filter(([key]) => key !== 'experiences' && key !== 'gender' && key !== 'age')
-    .reduce((acc, [key, value]) => {
+    .reduce((acc: { [key: string]: string | number | string[] }, [key, value]) => {
       acc[attributeTranslations[key] || key] = value;
       return acc;
     }, {});
+
 
   return (
     <div className={styles.playerCard}>
