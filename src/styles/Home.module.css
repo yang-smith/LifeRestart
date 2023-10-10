@@ -25,6 +25,13 @@
     font-weight: bold;
 }
 
+.author {
+    position: fixed;
+    top: 90%;
+    left: 80%;
+    transform: translate(-50%, -50%);
+}
+
 .button_begain {
     position: fixed;
     top: 65%;

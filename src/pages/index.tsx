@@ -14,6 +14,9 @@ const Home: React.FC = () => {
     <div className={styles.contenter}>
       <div>
         <h1 className={styles.h1_begain}>人生模拟器</h1>
+        <p className={styles.author}>
+          ---- <a href="https://你的网站地址.com" target="_blank" rel="noopener noreferrer">君秋水</a>
+        </p>
         <button className={styles.button_begain} onClick={startGame}>
           重开人生
         </button>
