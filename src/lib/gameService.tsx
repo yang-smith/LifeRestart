@@ -15,14 +15,14 @@ import {
 
 export function generatePlayerContent(playerAttributes: PlayerAttributes): string {
   const playerContent =
-    "### 当前玩家属性\n" +
-    "- **性别**: " + playerAttributes.gender + "\n" +
-    "- **年龄**: " + playerAttributes.age + "\n" +
-    "- **外貌**: " + playerAttributes.appearance + " \n" +
-    "- **智力**: " + playerAttributes.intelligence + " \n" +
-    "- **家境**: " + playerAttributes.wealth + " \n" +
-    "- **体质**: " + playerAttributes.health + " \n" +
-    "- **心境**: " + playerAttributes.mental_state + " \n";
+    "玩家属性如下：\n" +
+    "- **性别**: " + playerAttributes.gender + "；\n" +
+    "- **年龄**: " + playerAttributes.age + "；\n" +
+    "- **外貌**: " + playerAttributes.appearance + " ；\n" +
+    "- **智力**: " + playerAttributes.intelligence + " ；\n" +
+    "- **家境**: " + playerAttributes.wealth + "；\n" +
+    "- **体质**: " + playerAttributes.health + " ；\n" +
+    "- **心境**: " + playerAttributes.mental_state + " ；\n";
 
   return playerContent;
 }

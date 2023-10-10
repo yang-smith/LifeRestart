@@ -39,14 +39,20 @@ const PlayerLifeEvents: React.FC = () => {
             return;
         }
         const result = await generateAgeEvent(playerAttributesRef.current);
-        if (result) {
+        console.log(result);
+        const parsedResult = JSON.parse(result);
+        if (parsedResult && Array.isArray(parsedResult.events)) {
+            const eventsList = parsedResult.events.map(event => {
+                return `${event.age}岁: ${event.eventDescription}`;
+            });
+
             setPlayerAttributes(prevState => ({
                 ...prevState,
                 age: prevState.age + 10
             }));
-            const eventsList = result.split("#");
-            console.log(eventsList);
+
             setAgeEvent(prevEvents => [...prevEvents, ...eventsList]);
+
             setIsAIWorking(false);
 
             await new Promise(resolve => setTimeout(resolve, 3000));
@@ -54,14 +60,14 @@ const PlayerLifeEvents: React.FC = () => {
             console.log(eventData);
             try {
                 const parsedEvent = JSON.parse(eventData);
-            
+
                 if (parsedEvent.eventDescription && parsedEvent.choices && parsedEvent.choices.length > 0) {
                     setEventDescription(parsedEvent.eventDescription);
-                    
+
                     // 提取choices中的描述
                     const choiceDescriptions = parsedEvent.choices.map(choice => choice.optionDescription);
                     setChoices(choiceDescriptions);
-                    
+
                     setIsDecisionModalOpen(true);
                 }
             } catch (error) {
