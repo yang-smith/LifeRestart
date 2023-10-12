@@ -70,6 +70,7 @@ export async function generateEvent(playerAttributes: PlayerAttributes): Promise
     return response;
   } catch (error) {
     console.error("Error fetching data from OpenAI:", error);
+    throw new Error("Failed to generate event");
   }
 }
 

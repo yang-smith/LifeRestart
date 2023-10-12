@@ -21,6 +21,8 @@ const PlayerLifeEvents: React.FC = () => {
     const [displayedEvents, setDisplayedEvents] = useState<string[]>([]);
     const [ageEvent, setAgeEvent] = useState<string[]>([]);
     const [currentIndex, setCurrentIndex] = useState(0);
+    const [fetchError, setFetchError] = useState(false);
+
     useEffect(() => {
         playerAttributesRef.current = playerAttributes;
     }, [playerAttributes]);
@@ -30,6 +32,7 @@ const PlayerLifeEvents: React.FC = () => {
     async function fetchAgeEvent() {
         console.log("fetchAgeEvent is called");
         setIsAIWorking(true);
+        setFetchError(false);
         if (playerAttributesRef.current.age >= playerAttributesRef.current.health * 10) {
             const result = await death(playerAttributesRef.current, ageEvent);
             console.log(result);
@@ -38,43 +41,45 @@ const PlayerLifeEvents: React.FC = () => {
             setIsAIWorking(false);
             return;
         }
-        const result = await generateAgeEvent(playerAttributesRef.current);
-        console.log(result);
-        const parsedResult = JSON.parse(result);
-        if (parsedResult && Array.isArray(parsedResult.events)) {
-            const eventsList = parsedResult.events.map(event => {
-                return `${event.age}岁: ${event.eventDescription}`;
-            });
 
-            setPlayerAttributes(prevState => ({
-                ...prevState,
-                age: prevState.age + 10
-            }));
+        try {
+            const result = await generateAgeEvent(playerAttributesRef.current);
+            console.log(result);
+            const parsedResult = JSON.parse(result);
+            if (parsedResult && Array.isArray(parsedResult.events)) {
+                setFetchError(false);
+                const eventsList = parsedResult.events.map(event => {
+                    return `${event.age}岁: ${event.eventDescription}`;
+                });
 
-            setAgeEvent(prevEvents => [...prevEvents, ...eventsList]);
+                setPlayerAttributes(prevState => ({
+                    ...prevState,
+                    age: prevState.age + 10
+                }));
+                setAgeEvent(prevEvents => [...prevEvents, ...eventsList]);
+                setIsAIWorking(false);
 
-            setIsAIWorking(false);
-
-            await new Promise(resolve => setTimeout(resolve, 3000));
-            const eventData = await generateEvent(playerAttributesRef.current);
-            console.log(eventData);
-            try {
-                const parsedEvent = JSON.parse(eventData);
-
-                if (parsedEvent.eventDescription && parsedEvent.choices && parsedEvent.choices.length > 0) {
-                    setEventDescription(parsedEvent.eventDescription);
-
-                    // 提取choices中的描述
-                    const choiceDescriptions = parsedEvent.choices.map(choice => choice.optionDescription);
-                    setChoices(choiceDescriptions);
-
-                    setIsDecisionModalOpen(true);
+                await new Promise(resolve => setTimeout(resolve, 3000));
+                const eventData = await generateEvent(playerAttributesRef.current);
+                console.log(eventData);
+                try {
+                    const parsedEvent = JSON.parse(eventData);
+                    if (parsedEvent.eventDescription && parsedEvent.choices && parsedEvent.choices.length > 0) {
+                        setEventDescription(parsedEvent.eventDescription);
+                        const choiceDescriptions = parsedEvent.choices.map(choice => choice.optionDescription);
+                        setChoices(choiceDescriptions);
+                        setIsDecisionModalOpen(true);
+                    }
+                } catch (error) {
+                    console.error("Error parsing the event data:", error);
                 }
-            } catch (error) {
-                console.error("Error parsing the event data:", error);
             }
+        } catch (error) {
+            console.error("Error while fetching age event:", error);
+            setFetchError(true);
+        } finally {
+            setIsAIWorking(false);
         }
-
     }
     async function handleChoice(choice: string) {
         setHasMadeChoice(true);
@@ -151,6 +156,14 @@ const PlayerLifeEvents: React.FC = () => {
             </div>
             {isAIWorking ? (
                 <div className={styles.loadingMessage}>AI正在工作...</div>
+            ) : null}
+            {fetchError ? (
+                <button
+                    className={styles.choiceButton}
+                    onClick={fetchAgeEvent}
+                >
+                    与服务器连接失败，请重试
+                </button>
             ) : null}
             {isDeath ? (
                 <button
