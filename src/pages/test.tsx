@@ -6,7 +6,7 @@ const messages = [                    {
     role: 'user',
     content: 'just say this is a test',
 }]; 
-const key = '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'; 
+const key = null; 
 const prompt = 'say just a test'; 
 const temperature = 0.7; 
 
