@@ -1,7 +1,7 @@
 // lib/openAiService.tsx
 
-const openAiEndpoint = `https://api.openai.com/v1/chat/completions`;
-// const openAiEndpoint = `https://api.autumnriver.chat/api/v1/post`;
+// const openAiEndpoint = `https://api.openai.com/v1/chat/completions`;
+const openAiEndpoint = `https://openai-proxy-vercel-theta.vercel.app/api/openai`;
 
 export interface ConversationMessage {
   role: string;
